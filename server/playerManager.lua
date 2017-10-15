@@ -6,7 +6,7 @@ PlayerManager = Class.class(function(self)
 end)
 
 function PlayerManager:add(identifier, player)
-	self.players[player] = player
+	self.players[identifier] = player
 end
 
 function PlayerManager:remove(identifier)
@@ -54,3 +54,19 @@ AddEventHandler('playerDropped', function(playerName, setKickReason , deferrals)
 	end
 	playerManager:remove(identifier)
 end)
+
+
+RegisterServerEvent("GTArmy/Player/Inventory/add")
+RegisterServerEvent("GTArmy/Player/Inventory/remove")
+
+AddEventHandler("GTArmy/Player/Inventory/add", function(who, what, howmuch)
+	playerManager:get(who).inventory:add(what, howmuch)
+end)
+
+AddEventHandler("GTArmy/Player/Inventory/remove", function(who, what, howmuch)
+	playerManager:get(who).inventory:add(what, howmuch)
+end)
+
+--AddEventHandler("GTArmy/Player/getprop", function(who, what)
+--	TriggerEvent("GTArmy/Player/returnprop", who, what, playerManager:get(who)[what])
+--end)
