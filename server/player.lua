@@ -21,6 +21,7 @@ Player = Class.class(function(self, playerId)
 	self.identifier = getIdentifierLocal(playerId)
 	self.inventory = Inventory()
 	self.group = ArmyGroup()
+	self.team = 0
 end)
 
 function Player:serialize()
@@ -32,9 +33,9 @@ end
 function Player:unserialize(data)
 	value = json.decode(data)
 	self.identifier = value['identifier']
+	self.team = value['team']
 	self.inventory:unpack(value['inventory'])
 	self.group:unpack(value['group'])
-	print(self:serialize())
 	return data
 end
 

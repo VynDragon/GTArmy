@@ -5,8 +5,8 @@ PlayerManager = Class.class(function(self)
 	self.players = {}
 end)
 
-function PlayerManager:add(player)
-	self.players[player.identifier] = player
+function PlayerManager:add(identifier, player)
+	self.players[player] = player
 end
 
 function PlayerManager:remove(identifier)
@@ -38,7 +38,7 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason , deferra
 	else
 		player:unserialize(data)
 	end
-    playerManager:add(player)
+    playerManager:add(player.identifier, player)
 end)
 
 AddEventHandler('playerDropped', function(playerName, setKickReason , deferrals)
