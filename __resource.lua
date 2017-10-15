@@ -14,6 +14,7 @@ client_scripts {
 	'common/DataDumper.lua',
 	'common/armySoldier.lua',
 	'common/ped.lua',
+	'common/checksum.lua',
 	'client/networkEntities.lua',
 	'client/client.lua'
 }
@@ -27,6 +28,7 @@ server_scripts {
 	'common/ped.lua',
 	'common/networkEntities.lua',
 	'common/inventory.lua',
+	'common/checksum.lua',
 	'server/tracking.lua',
 	'server/networkEntities.lua',
 	'server/player.lua',

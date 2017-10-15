@@ -18,10 +18,19 @@ function PlayerManager:get(identifier)
 	return self.players[identifier]
 end
 
+function PlayerManager:serialize(identifier)
+	value = json.encode(self)
+	return value
+end
+
 playerManager = PlayerManager()
 
-AddEventHandler('playerConnecting', function(playerName, setKickReason , deferrals)
-	local player = Player(source)
+AddEventHandler('playerConnecting', function(playerName, setKickReason , deferrals, offset_source)
+	source_real = source
+	if source_real == nil or source_real == '' then
+		source_real = MAH_SOURCE_DEBUG
+	end
+	local player = Player(source_real)
 	print ('Player connected: ' .. player.identifier)
 	local data = LoadResourceFile(PlayerResourceName, PlayerDataPath .. '/' .. player.identifier);
 	if data == nil then

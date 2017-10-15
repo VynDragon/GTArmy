@@ -9,14 +9,18 @@ RegisterServerEvent("GTArmy/networkEntities/got")
 RegisterServerEvent("GTArmy/dumpplayers")
 RegisterServerEvent("GTArmy/actualizeplayer")
 
+MAH_SOURCE_DEBUG = nil
+
 AddEventHandler('GTArmy/SpawnTestPed', function()
 	print('triggered SpawnTestPed')
 	local x, y, z = Tracking.getPlayerPosition(source)
-	print ('position' .. x .. ' ' .. y .. ' ' .. z)
 	local identifier = Player.getIdentifier(source)
 	local player = playerManager:get(identifier)
-	player.group:add(ArmySoldier("Army", "S_M_Y_MARINE_01", nil))
-	TriggerClientEvent("GTArmy/syncing/Ped/create", source, 29, 1702441027, x, y, z, 0);
+	local soldier = ArmySoldier("Army", "S_M_Y_MARINE_01", nil)
+	player.group:add(soldier)
+	NetworkEntities.add(NetworkEntity("ArmySoldier", soldier:pack()))
+	TriggerClientEvent('GTArmy/networkEntities/check', source, NetworkEntities.getIdandHash())
+	--TriggerClientEvent("GTArmy/syncing/Ped/create", source, 29, 1702441027, x, y, z, 0);
 end)
 
 AddEventHandler('GTArmy/showentitytable', function()
@@ -34,5 +38,6 @@ AddEventHandler('GTArmy/dumpplayers', function()
 end)
 
 AddEventHandler('GTArmy/actualizeplayer', function()
-	print(playerManager:serialize())
+	MAH_SOURCE_DEBUG = source 
+	TriggerEvent('playerConnecting', nil, nil, nil)
 end)
