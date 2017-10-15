@@ -1,5 +1,6 @@
-ArmySoldier = Class.class(Ped, function(self, type, model, weapon)
-	Ped.init(self, type, model, weapon)
+ArmySoldier = Class.class(Ped, function(self, type, model, weapon, spawnx, spawny, spawnz)
+	Ped.init(self, type, model, weapon, spawnx, spawny, spawnz)
+	
 end)
 
 function ArmySoldier:unpack(value)

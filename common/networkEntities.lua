@@ -1,11 +1,16 @@
 NetworkEntities = {}
 
-NetworkEntity = Class.class(function(self, basename, basedata, networkId, localEntity)
+NetworkEntity = Class.class(function(self, basename, basedata, networkId)
 	self.basename = basename
 	self.basedata = basedata
 	self.networkId = networkId
-	self.entity = localEntity
+	self.owner = nil
+end)
+
+NetworkEntityServer = Class.class(NetworkEntity, function(self, basename, basedata, networkId)
+	NetworkEntity.init(self, basename, basedata, networkId)
 	self.waitingForCreation = true
+	self.invalidreports = 0
 end)
 
 function NetworkEntity:reconstructBase()
@@ -84,7 +89,11 @@ function NetworkEntities.getIdandHash()
 		if vnetworkId == nil then
 			vnetworkId = ''
 		end
-		buff[k] = Checksum.fletcher32(v.basename .. orderedUnpack2Text(v.basedata) .. vnetworkId)
+		local vowner = v.owner
+		if vowner == nil then
+			vowner = ''
+		end
+		buff[k] = Checksum.fletcher32(v.basename .. orderedUnpack2Text(v.basedata) .. vnetworkId .. vowner)
 	end
 	return buff
 end
@@ -92,3 +101,5 @@ end
 function NetworkEntities.toString()
 	return json.encode(NetworkedEntitiesTable)
 end
+
+ 
